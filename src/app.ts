@@ -12,7 +12,7 @@ app.use(cors());
 
 app.get('/', (req, res) => {
   res.status(200).json({
-    message: 'welcome to the server 5000',
+    message: 'welcome to the blog server 5000',
   });
 });
 
