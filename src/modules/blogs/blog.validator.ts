@@ -1,15 +1,19 @@
-import { Types } from 'mongoose';
 import { z } from 'zod';
+import { Types } from 'mongoose';
 
-const createBlogPostValidationSchema = z.object({
-  title: z.string().min(1, { message: 'Title is required' }),
-  content: z.string().min(1, { message: 'Content is required' }),
-  author: z.string(),
-  isPublished: z.boolean().default(true), // Default to true (published)
-  createdAt: z.date().default(() => new Date()), // Default to current date
-  updatedAt: z.date().default(() => new Date()), // Default to current date
+const CreateBlogValidationSchema = z.object({
+    body: z.object({
+        title: z.string().min(1, { message: 'Title is required' }),
+        content: z.string().min(1, { message: 'Content is required' }),
+        author: z.string().refine((id) => Types.ObjectId.isValid(id), {
+            message: 'Invalid author ID',
+        }),
+        isPublished: z.boolean().default(true),
+        createdAt: z.date().default(() => new Date()),
+        updatedAt: z.date().default(() => new Date()),
+    })
 });
 
-export const BlogPostValidation = {
-  createBlogPostValidationSchema,
+export const BlogsValidation = {
+    CreateBlogValidationSchema,
 };
