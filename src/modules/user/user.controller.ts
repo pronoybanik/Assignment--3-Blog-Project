@@ -37,10 +37,8 @@ const loginUser = catchAsync(async (req, res) => {
   });
 });
 
-
-
 export const UserController = {
   createUser,
   getAllUser,
-  loginUser
+  loginUser,
 };

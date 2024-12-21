@@ -11,29 +11,21 @@ const getAllBlogsFromDB = async () => {
   return result;
 };
 
-const updateBlogsIntoDB = async (
-  id: string,
-  payload: IBlogs,
-) => {
-  const result = await BlogsModel.findOneAndUpdate(
-    { _id: id },
-    payload,
-    {
-      new: true,
-    },
-  );
+const updateBlogsIntoDB = async (id: string, payload: IBlogs) => {
+  const result = await BlogsModel.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
   return result;
 };
 
-
 const deleteBlogsIntoDB = async (id: string) => {
-  const result = await BlogsModel.deleteOne({ _id: id })
+  const result = await BlogsModel.deleteOne({ _id: id });
   return result;
-}
+};
 
 export const BlogsServices = {
   createBlogsIntoDB,
   getAllBlogsFromDB,
   updateBlogsIntoDB,
-  deleteBlogsIntoDB
+  deleteBlogsIntoDB,
 };

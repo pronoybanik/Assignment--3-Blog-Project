@@ -1,5 +1,5 @@
-import { Model } from "mongoose";
-import { USER_ROLE } from "./user.container";
+import { Model } from 'mongoose';
+import { USER_ROLE } from './user.container';
 
 export type TUser = {
   name: string;
@@ -10,7 +10,5 @@ export type TUser = {
   createdAt: Date;
   updatedAt: Date;
 };
-
-
 
 export type TUserRole = keyof typeof USER_ROLE;

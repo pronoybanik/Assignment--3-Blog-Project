@@ -24,14 +24,11 @@ const loginUser = async (payload: TUser) => {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
   }
 
-
   // checking if the user is blocked
   const userStatus = user?.isBlocked;
   if (userStatus === true) {
     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
   }
-
-
 
   //create token and sent to the  client
 
@@ -45,14 +42,12 @@ const loginUser = async (payload: TUser) => {
   });
 
   return {
-    accessToken
+    accessToken,
   };
 };
-
-
 
 export const UserServices = {
   createUserIntoDB,
   getAllUserFromDB,
-  loginUser
+  loginUser,
 };
