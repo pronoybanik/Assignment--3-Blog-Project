@@ -1,11 +1,11 @@
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { UserServices } from './user.service';
+import { BlogsServices } from './blog.service';
 import httpStatus from 'http-status';
 
-const createCourse = catchAsync(async (req, res, next) => {
+const createBlogs = catchAsync(async (req, res, next) => {
   const data = req.body;
-  const result = await UserServices.createUserIntoDB(data);
+  const result = await BlogsServices.createBlogsIntoDB(data);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -15,8 +15,8 @@ const createCourse = catchAsync(async (req, res, next) => {
   });
 });
 
-const getAllCourse = catchAsync(async (req, res, next) => {
-  const result = await UserServices.getAllUserFromDB();
+const getAllBlogs = catchAsync(async (req, res, next) => {
+  const result = await BlogsServices.getAllBlogsFromDB();
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -26,7 +26,7 @@ const getAllCourse = catchAsync(async (req, res, next) => {
   });
 });
 
-export const UserController = {
-  createCourse,
-  getAllCourse,
+export const blogsControllers = {
+  createBlogs,
+  getAllBlogs,
 };

@@ -10,7 +10,7 @@ const getAllUserFromDB = async () => {
   return result;
 };
 
-export const UserService = {
+export const UserServices = {
   createUserIntoDB,
   getAllUserFromDB,
 };
