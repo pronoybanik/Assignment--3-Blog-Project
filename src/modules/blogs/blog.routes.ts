@@ -2,6 +2,8 @@ import express from 'express';
 import { blogsControllers } from './blog.controller';
 import validateRequest from '../../middlewares/validateRequest';
 import { BlogsValidation } from './blog.validator';
+import auth from '../../middlewares/auth';
+import { USER_ROLE } from '../user/user.container';
 
 const routes = express.Router();
 
@@ -11,5 +13,7 @@ routes.post(
     blogsControllers.createBlogs,
 );
 routes.get('/', blogsControllers.getAllBlogs);
+routes.patch('/:id', blogsControllers.updateBlogs);
+routes.delete('/:id', blogsControllers.deleteBlogs);
 
 export const BlogsRoute = routes;

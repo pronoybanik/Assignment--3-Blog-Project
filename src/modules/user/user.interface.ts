@@ -1,4 +1,7 @@
-export type IUser = {
+import { Model } from "mongoose";
+import { USER_ROLE } from "./user.container";
+
+export type TUser = {
   name: string;
   email: string;
   password: string;
@@ -7,3 +10,7 @@ export type IUser = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+
+
+export type TUserRole = keyof typeof USER_ROLE;

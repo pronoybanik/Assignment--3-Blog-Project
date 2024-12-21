@@ -8,9 +8,9 @@ const createBlogs = catchAsync(async (req, res, next) => {
   const result = await BlogsServices.createBlogsIntoDB(data);
 
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: httpStatus.CREATED,
     success: true,
-    message: 'user create successfully',
+    message: 'Blog created successfully',
     data: result,
   });
 });
@@ -26,7 +26,35 @@ const getAllBlogs = catchAsync(async (req, res, next) => {
   });
 });
 
+const updateBlogs = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const result = await BlogsServices.updateBlogsIntoDB(id, req.body);
+
+  sendResponse(res, {
+    success: true,
+    message: 'Blog updated successfully',
+    statusCode: httpStatus.OK,
+    data: result,
+  });
+});
+
+const deleteBlogs = catchAsync(async (req, res, next) => {
+  const { id } = req.params
+  const result = await BlogsServices.deleteBlogsIntoDB(id)
+
+  sendResponse(res, {
+    success: true,
+    message: 'Blog deleted successfully',
+    statusCode: httpStatus.OK,
+    data: result,
+  });
+})
+
+
+
 export const blogsControllers = {
   createBlogs,
   getAllBlogs,
+  updateBlogs,
+  deleteBlogs
 };
