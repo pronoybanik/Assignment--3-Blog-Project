@@ -1,6 +1,6 @@
 import app from './app';
 import mongoose from 'mongoose';
-require("colors");
+require('colors');
 
 async function main() {
   try {
