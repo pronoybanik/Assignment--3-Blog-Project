@@ -16,7 +16,7 @@ const createBlogs = catchAsync(async (req, res, next) => {
 });
 
 const getAllBlogs = catchAsync(async (req, res, next) => {
-  const result = await BlogsServices.getAllBlogsFromDB();
+  const result = await BlogsServices.getAllBlogsFromDB(req.query);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -28,6 +28,7 @@ const getAllBlogs = catchAsync(async (req, res, next) => {
 
 const updateBlogs = catchAsync(async (req, res, next) => {
   const { id } = req.params;
+
   const result = await BlogsServices.updateBlogsIntoDB(id, req.body);
 
   sendResponse(res, {

@@ -46,8 +46,16 @@ const loginUser = async (payload: TUser) => {
   };
 };
 
+const updateUserIntoDB = async (id: string, payload: TUser) => {
+  const result = await UserModel.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
+  return result;
+};
+
 export const UserServices = {
   createUserIntoDB,
   getAllUserFromDB,
   loginUser,
+  updateUserIntoDB,
 };

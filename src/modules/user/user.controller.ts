@@ -37,8 +37,21 @@ const loginUser = catchAsync(async (req, res) => {
   });
 });
 
+const updateUser = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const result = await UserServices.updateUserIntoDB(id, req.body);
+
+  sendResponse(res, {
+    success: true,
+    message: 'Blog updated successfully',
+    statusCode: httpStatus.OK,
+    data: result,
+  });
+});
+
 export const UserController = {
   createUser,
   getAllUser,
   loginUser,
+  updateUser,
 };

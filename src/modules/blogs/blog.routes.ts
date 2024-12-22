@@ -9,11 +9,16 @@ const routes = express.Router();
 
 routes.post(
   '/',
+  auth(USER_ROLE.user),
   validateRequest(BlogsValidation.CreateBlogValidationSchema),
   blogsControllers.createBlogs,
 );
 routes.get('/', blogsControllers.getAllBlogs);
-routes.patch('/:id', blogsControllers.updateBlogs);
-routes.delete('/:id', blogsControllers.deleteBlogs);
+routes.patch('/:id', auth(USER_ROLE.user), blogsControllers.updateBlogs);
+routes.delete(
+  '/:id',
+  auth(USER_ROLE.admin, USER_ROLE.user),
+  blogsControllers.deleteBlogs,
+);
 
 export const BlogsRoute = routes;
