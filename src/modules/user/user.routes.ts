@@ -13,7 +13,7 @@ routes.get('/', UserController.getAllUser);
 
 routes.post(
   '/logIn',
-  // validateRequest(UserValidation.CreateUserValidationSchema),
+  validateRequest(UserValidation.loginValidationSchema),
   UserController.loginUser,
 );
 

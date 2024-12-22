@@ -1,12 +1,12 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
-import { ZodError } from 'zod';
-// import { TErrorSources } from '../interface/error';
+import { ZodError, ZodIssue } from 'zod';
+import { TErrorSources } from '../interface/error';
 import config from '../config';
 import AppError from './AppError';
-import { TErrorSources } from '../interface/error';
 import handleZodError from '../errors/handleZodError';
-import handleCastError from '../errors/handleCastError';
 import handleValidationError from '../errors/handleValidationError';
+import handleCastError from '../errors/handleCastError';
+import handleDuplicateError from '../errors/handleDuplicateError';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode = 500;
@@ -34,6 +34,11 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
     errorSources = simplifiedError?.errorSources;
+  } else if (err?.code === 11000) {
+    const simplifiedError = handleDuplicateError(err);
+    statusCode = simplifiedError?.statusCode;
+    message = simplifiedError?.message;
+    errorSources = simplifiedError?.errorSources;
   } else if (err instanceof AppError) {
     statusCode = err?.statusCode;
     message = err.message;
@@ -57,8 +62,20 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     success: false,
     message,
     errorSources,
+    // err,
     stack: config.NODE_ENV === 'development' ? err?.stack : null,
   });
 };
 
 export default globalErrorHandler;
+
+//pattern
+/*
+success
+message
+errorSources:[
+  path:'',
+  message:''
+]
+stack
+*/
