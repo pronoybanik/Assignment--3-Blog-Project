@@ -58,12 +58,12 @@ const createBlogsIntoDB = async (payload: IBlogs) => {
 const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
   const queryObj = { ...query };
 
-  const blogsSearchableFields = ['title', 'author._id'];
+  const blogsSearchableFields = ['title', 'content', 'author._id'];
 
   let searchTerm = '';
 
-  if (query?.searchTerm) {
-    searchTerm = query?.searchTerm as string;
+  if (query?.search) {
+    searchTerm = query?.search as string;
   }
 
   const searchQuery = BlogsModel.find({
@@ -72,7 +72,7 @@ const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
     })),
   });
 
-  const excludeFields = ['searchTerm', 'sort', 'sortOrder', 'filter'];
+  const excludeFields = ['search', 'sortBy', 'sortOrder', 'filter'];
   excludeFields.forEach((el) => delete queryObj[el]);
 
   if (query?.filter) {
@@ -83,9 +83,10 @@ const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
 
   const filterQuery = searchQuery.find(queryObj).populate('author');
 
-  const sortField = query?.sort ? (query.sort as string) : 'createdAt';
+  const sortBy = query?.sortBy ? (query.sortBy as string) : 'createdAt';
   const sortOrder = query?.sortOrder === 'asc' ? 1 : -1;
-  const sortOptions: { [key: string]: 1 | -1 } = { [sortField]: sortOrder };
+
+  const sortOptions: { [key: string]: 1 | -1 } = { [sortBy]: sortOrder };
 
   const sortedBlogs = await filterQuery.sort(sortOptions);
 
