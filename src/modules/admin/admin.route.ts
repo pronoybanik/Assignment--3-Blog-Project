@@ -4,8 +4,16 @@ import auth from '../../middlewares/auth';
 import { USER_ROLE } from '../user/user.container';
 const routes = express.Router();
 
-routes.patch('/users/:userId/block', auth(USER_ROLE.admin), adminControllers.adminBlockUser);
+routes.patch(
+  '/users/:userId/block',
+  auth(USER_ROLE.admin),
+  adminControllers.adminBlockUser,
+);
 
-routes.delete('/blogs/:id',auth(USER_ROLE.admin), adminControllers.adminDeleteBlogs);
+routes.delete(
+  '/blogs/:id',
+  auth(USER_ROLE.admin),
+  adminControllers.adminDeleteBlogs,
+);
 
 export const AdminRoute = routes;
