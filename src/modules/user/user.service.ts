@@ -37,12 +37,12 @@ const loginUser = async (payload: TUser) => {
     role: user.role,
   };
 
-  const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
+  const token = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
     expiresIn: '10d',
   });
 
   return {
-    accessToken,
+    token,
   };
 };
 
