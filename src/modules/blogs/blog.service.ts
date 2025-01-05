@@ -3,15 +3,20 @@ import UserModel from '../user/user.module';
 import { IBlogs } from './blog.interface';
 import { BlogsModel } from './blog.module';
 import httpStatus from 'http-status';
+import mongoose from 'mongoose';
 
-const createBlogsIntoDB = async (payload: IBlogs) => {
-  const authorValidation = await UserModel.findOne({ _id: payload.author });
+const createBlogsIntoDB = async (payload: IBlogs, user: { userId: string }) => {
+  const authorValidation = await UserModel.findOne({
+    _id: new mongoose.Types.ObjectId(user.userId),
+  });
 
   if (!authorValidation) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Author Id is not Found');
+    throw new AppError(httpStatus.NOT_FOUND, 'Author ID not found');
   }
 
-  const result = BlogsModel.create(payload);
+  payload.author = new mongoose.Types.ObjectId(user.userId);
+
+  const result = await BlogsModel.create(payload);
   return result;
 };
 

@@ -5,7 +5,8 @@ import httpStatus from 'http-status';
 
 const createBlogs = catchAsync(async (req, res, next) => {
   const data = req.body;
-  const result = await BlogsServices.createBlogsIntoDB(data);
+
+  const result = await BlogsServices.createBlogsIntoDB(data, req.user);
 
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
